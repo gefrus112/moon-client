@@ -21,17 +21,16 @@ Grab the latest `MoonClient.exe` from [**GitHub Releases**](https://github.com/g
 
 ## 🌐 Website
 
-The marketing site lives in [`website/`](website/) — a dependency-free static page with a **Three.js** hero scene (custom `moon.glb` model: cratered low-poly moon + orbit ring + floating blocks), a **Roblox profile lookup** (shows *your* profile only — avatar, stats, and games you've created), and a **Roblox game search** with full detail modals, all powered by Roblox's public APIs from the browser.
+The marketing site lives at the repo root (`index.html`, `css/`, `js/`, `models/`, `vendor/`) and is deployed to GitHub Pages at <https://gefrus112.github.io/moon-client/>. It's a dependency-free static page with a **Three.js** hero scene (custom `moon.glb` model: cratered low-poly moon + orbit ring + floating blocks), a **Roblox profile lookup** (shows *your* profile only — avatar, stats, and games you've created), and a **Roblox game search** with full detail modals, all powered by Roblox's public APIs from the browser.
 
 Run it locally:
 
 ```bash
-cd website
 python3 -m http.server 3000 --bind 0.0.0.0
 # open http://localhost:3000
 ```
 
-Three.js (r160) is vendored under `website/vendor/` so the site works fully offline — no CDN required.
+Three.js (r160) is vendored under `vendor/` so the site works fully offline — no CDN required.
 
 ## 🛠️ Building the client
 
