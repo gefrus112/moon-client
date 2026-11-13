@@ -12,6 +12,11 @@
     <Description>Moon Client — a better client for Roblox optimization.</Description>
     <Authors>gefrus112</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ApplicationIcon>Assets\moon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\moon.png" />
+  </ItemGroup>
 
 </Project>

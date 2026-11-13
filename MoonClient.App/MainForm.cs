@@ -33,6 +33,19 @@ internal sealed class MainForm : Form
         ForeColor = TextColor;
         Font = new Font("Segoe UI", 10F);
 
+        // App icon (embedded moon.png) — title bar + taskbar
+        try
+        {
+            using var stream = typeof(MainForm).Assembly
+                .GetManifestResourceStream("MoonClient.App.Assets.moon.png");
+            if (stream is not null)
+                Icon = new Icon(stream);
+        }
+        catch
+        {
+            // Icon is decorative — never block startup over it.
+        }
+
         // ---------- header ----------
         var header = new Panel
         {
@@ -41,13 +54,22 @@ internal sealed class MainForm : Form
             BackColor = Panel,
         };
 
+        var iconBox = new PictureBox
+        {
+            Image = LoadIconImage(),
+            Size = new Size(58, 58),
+            Location = new Point(24, 22),
+            SizeMode = PictureBoxSizeMode.Zoom,
+            BackColor = Color.Transparent,
+        };
+
         var title = new Label
         {
-            Text = "🌙  Moon Client",
+            Text = "Moon Client",
             Font = new Font("Segoe UI", 20F, FontStyle.Bold),
             ForeColor = TextColor,
             AutoSize = true,
-            Location = new Point(24, 18),
+            Location = new Point(94, 20),
         };
 
         var version = typeof(MainForm).Assembly.GetName().Version;
@@ -56,7 +78,7 @@ internal sealed class MainForm : Form
             Text = $"A better client for Roblox optimization   ·   v{version}",
             ForeColor = Muted,
             AutoSize = true,
-            Location = new Point(26, 62),
+            Location = new Point(96, 62),
         };
 
         _statusLabel = new Label
@@ -64,9 +86,10 @@ internal sealed class MainForm : Form
             Text = "Ready.",
             ForeColor = Cyan,
             AutoSize = true,
-            Location = new Point(26, 88),
+            Location = new Point(96, 88),
         };
 
+        header.Controls.Add(iconBox);
         header.Controls.Add(title);
         header.Controls.Add(subtitle);
         header.Controls.Add(_statusLabel);
@@ -81,9 +104,9 @@ internal sealed class MainForm : Form
             Padding = new Padding(24, 20, 24, 8),
         };
 
-        _launchButton = MakeButton("▶  Launch Roblox", Accent, AccentHover);
-        _optimizeButton = MakeButton("⚡  Optimize Roblox", Color.FromArgb(38, 44, 74), Color.FromArgb(52, 60, 98));
-        _updateButton = MakeButton("🔄  Check for Updates", Color.FromArgb(38, 44, 74), Color.FromArgb(52, 60, 98));
+        _launchButton = MakeButton("Launch Roblox", Accent, AccentHover);
+        _optimizeButton = MakeButton("Optimize Roblox", Color.FromArgb(38, 44, 74), Color.FromArgb(52, 60, 98));
+        _updateButton = MakeButton("Check for Updates", Color.FromArgb(38, 44, 74), Color.FromArgb(52, 60, 98));
 
         _launchButton.Click += OnLaunch;
         _optimizeButton.Click += OnOptimize;
@@ -123,6 +146,26 @@ internal sealed class MainForm : Form
         Controls.Add(footer);
 
         Load += OnLoad;
+    }
+
+    /// <summary>Loads the embedded moon icon image (independent copy).</summary>
+    private static Image? LoadIconImage()
+    {
+        try
+        {
+            var assembly = typeof(MainForm).Assembly;
+            using var stream = assembly.GetManifestResourceStream("MoonClient.App.Assets.moon.png");
+            if (stream is null)
+                return null;
+            using var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            using var bitmap = new Bitmap(memory);
+            return bitmap.Clone();
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static Button MakeButton(string text, Color back, Color hover)
@@ -166,7 +209,7 @@ internal sealed class MainForm : Form
             SetStatus("Launching Roblox…");
             Log("Launching Roblox…");
             RobloxService.LaunchRoblox();
-            SetStatus("Roblox is launching. Have fun! 🎮");
+            SetStatus("Roblox is launching. Have fun!");
             Log("Roblox launched.");
         }
         catch (Exception ex)
@@ -239,7 +282,7 @@ internal sealed class MainForm : Form
             }
             else
             {
-                SetStatus("You're up to date. ✅");
+                SetStatus("You're up to date.");
                 Log("You're already on the latest version.");
             }
         }
