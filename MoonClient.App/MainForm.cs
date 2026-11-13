@@ -13,7 +13,7 @@ internal sealed class MainForm : Form
     private static readonly Color Accent = Color.FromArgb(124, 92, 255);
     private static readonly Color AccentHover = Color.FromArgb(143, 110, 255);
     private static readonly Color Cyan = Color.FromArgb(34, 211, 238);
-    private static readonly Color Text = Color.FromArgb(238, 240, 255);
+    private static readonly Color TextColor = Color.FromArgb(238, 240, 255);
     private static readonly Color Muted = Color.FromArgb(154, 163, 199);
 
     private readonly Label _statusLabel;
@@ -30,7 +30,7 @@ internal sealed class MainForm : Form
         MinimumSize = new Size(480, 540);
         StartPosition = FormStartPosition.CenterScreen;
         BackColor = Bg;
-        ForeColor = Text;
+        ForeColor = TextColor;
         Font = new Font("Segoe UI", 10F);
 
         // ---------- header ----------
@@ -45,7 +45,7 @@ internal sealed class MainForm : Form
         {
             Text = "🌙  Moon Client",
             Font = new Font("Segoe UI", 20F, FontStyle.Bold),
-            ForeColor = Text,
+            ForeColor = TextColor,
             AutoSize = true,
             Location = new Point(24, 18),
         };
@@ -134,7 +134,7 @@ internal sealed class MainForm : Form
             Height = 46,
             Margin = new Padding(0, 0, 0, 10),
             BackColor = back,
-            ForeColor = Text,
+            ForeColor = TextColor,
             FlatStyle = FlatStyle.Flat,
             Font = new Font("Segoe UI", 11F, FontStyle.Bold),
             Cursor = Cursors.Hand,

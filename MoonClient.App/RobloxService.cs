@@ -65,7 +65,8 @@ internal static class RobloxService
         if (File.Exists(SettingsPath))
         {
             doc = XDocument.Load(SettingsPath);
-            doc.Root ??= new XElement("Settings");
+            if (doc.Root is null)
+                doc.Add(new XElement("Settings"));
         }
         else
         {
